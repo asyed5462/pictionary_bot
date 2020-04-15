@@ -1,0 +1,20 @@
+rai:
+  version: 0.2
+  image: weiren2/ece408-sp20:topic-2-picbot-test-v1
+resources:
+  cpu:
+    architecture: amd64 # use amd64 unless your project requires running on a different architecture
+  gpu:
+    count: 1
+  limits:
+    network: true
+commands:
+  build: # commands in the following seciton are executed sequentially
+    - /bin/bash -c "pwd"
+    - /bin/bash -c "cp -r /src/* /build"
+    - /bin/bash -c "cd /build && g++ demo_cnpy.cpp -lcnpy -o demo_cnpy"
+    - ./demo_cnpy /ece408/dataset_small/apple.npy # demo using cnpy 
+    - ./demo_cnpy /ece408/test_set/yoga.npy # demo using cnpy
+    #- make
+    #- ./cuda-program ...
+    #- Evaluate accelerated version ...
